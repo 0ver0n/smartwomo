@@ -1,0 +1,26 @@
+# Andere Gasflaschen einstellen und kalibrieren
+
+Diese Version 0.3.0 ist auf **eine deutsche 11-kg-Stahl-Eigentumsflasche** abgestimmt. Die Truma-LevelControl-Hardware unterstützt laut Hersteller grundsätzlich viele Stahl- und Aluminiumflaschen; **unsere unabhängige Home-Assistant-Umrechnung ist aber nicht automatisch für alle Flaschen richtig**. Eine Änderung der Flaschengröße in der offiziellen Truma-App ändert NICHT die Konstanten dieser Home-Assistant-Integration.
+
+## Was wird gemessen?
+Der Sensor liefert eine Flüssigkeitshöhe in Millimetern sowie eine Ultraschall-Laufzeit und Temperatur. Die Integration rechnet die Höhe mit einem vereinfachten Flaschenmodell in Liter Flüssiggas, Kilogramm und Prozent um. Der Geometriealgorithmus nähert eine zylindrische Flasche mit gerundeten Enden an. Für Propan ist der Näherungsfaktor derzeit 1,96 Liter je kg. Die wirkliche Mischung aus Propan und Butan und verschiedene Flaschenformen können abweichen. **Weder für Gasdruck, Leckage, Heizungssteuerung noch für sicherheitskritische Abschaltungen benutzen.**
+
+## Flaschenprofil ändern
+1. Den bisherigen, funktionierenden Ordner `/config/custom_components/truma_levelcontrol/` vollständig sichern. Den Sensor und seinen Gasinhalt erst mit der offiziellen Truma-App gegenprüfen.
+2. Die Kennwerte der **konkreten neuen Flasche** beschaffen: Nennfüllmenge in kg, auf der Flasche angegebener **Wasserinhalt in Litern**, geschätzter **innerer** Durchmesser in mm, Innenform bzw. Tiefe der gewölbten Enden. Die äußeren Maße sind keine exakten Innenmaße.
+3. Im Paket liegt der **offline** arbeitende Helfer `tools/calibrate_bottle.py`. Er hat weder Bluetooth- noch HA- noch Internetzugriff und verändert keine Dateien. Beispiel für unser bisheriges **11-kg-Referenzprofil** (nicht als Konfiguration für andere Flaschen kopieren):
+   `python3 tools/calibrate_bottle.py --label "DE 11 kg Stahl" --nominal-kg 11 --water-l 27.2 --inner-diameter-mm 296 --cap-depth-mm 53.79639190 --max-valid-height-mm 360 --reference-height-mm 289 --reference-kg 9.2`
+4. Die ausgegebenen Werte in **`custom_components/truma_levelcontrol/const.py`** übertragen: `BOTTLE_PROFILE`, `BOTTLE_NOMINAL_GAS_KG`, `BOTTLE_WATER_VOLUME_L`, `BOTTLE_INNER_RADIUS_MM`, `BOTTLE_EFFECTIVE_CAP_DEPTH_MM`, `BOTTLE_EFFECTIVE_INNER_HEIGHT_MM`, `MAX_VALID_LIQUID_HEIGHT_MM`, `PROPANE_LITERS_PER_KG` und `PROPANE_DENSITY_KG_L`. Die letzte Dichte-Variable bleibt der Kehrwert von `PROPANE_LITERS_PER_KG`. **Nicht nur „11“ durch „5“ ersetzen**: Sonst bleibt die Volumenkurve falsch.
+5. Die maximale plausible Flüssigkeitshöhe begrenzt außerdem die **Fehlererkennung**. Wert weder unbegrenzt erhöhen noch über die effektive Innenhöhe setzen: Sonst können reflektierte/doppelte Ultraschallwerte als echter Füllstand gelten.
+6. Die aktuelle Integration verwendet **ein globales Flaschenprofil für alle eingebundenen LevelControl-Sensoren**. Zwei gleichzeitig verwendete Flaschen unterschiedlicher Größe benötigen deshalb eine weiterentwickelte per-Gerät-Konfiguration. V0.3.0 kann nicht zwei unterschiedliche Flaschenprofile gleichzeitig korrekt berechnen.
+7. Nach einer **Konfigurationsprüfung** nur Home Assistant Core kontrolliert neu starten. Die erste gültige BLE-Messung abwarten (Abfrageintervall 30 Minuten) und **Flüssigkeitshöhe, kg und Prozent** mit der originalen Truma-App vergleichen.
+8. Mindestens **zwei deutlich verschiedene Füllstände** gegenprüfen (z. B. nahezu voll und halbvoll, möglichst nicht nur einen Punkt). Bei merklichen Abweichungen Flascheninnengeometrie, Rundungen und Flüssiggasdichte korrigieren. Eine einzelne passende Kalibrierung beweist keine genaue gesamte Kennlinie. Im Zweifel nur **Rohhöhe** ausgeben und auf eine kg-/%-Genauigkeitsaussage verzichten.
+9. Bei Fehlern den gesicherten alten Ordner wiederherstellen und Home Assistant Core neu starten. Vor jeder weiteren Version eigene angepasste Konstanten erneut prüfen; Software-Updates können sie überschreiben.
+
+## Worauf es beim Flaschenwechsel ankommt
+- Nach jedem Flaschenwechsel den LevelControl gemäß Truma-Anleitung neu an der Flasche anbringen und **die Taste am Gerät kurz drücken**. Bei geändertem Flaschentyp auch die offizielle Truma-App entsprechend umstellen. Das ersetzt die oben beschriebene HA-Profilanpassung **nicht**.
+- Stahlflaschen benutzen den Magnethalter; Aluflaschen benötigen das passende Spannblech laut Hersteller. Die Hardware eignet sich **nicht** für Kunststoffflaschen oder die vom Hersteller ausgeschlossenen Tank-/nachfüllbaren Flaschen.
+- Bei mehr als 60–120 Minuten ohne neue Messung, `unavailable` oder BLE-Fehlern zunächst Batterien und Signalstärke prüfen. Ein alter „OK“-Status kann bestehen bleiben, obwohl gerade keine neue Messung erfolgt ist: auf `last_reported` von Höhe oder Prozent achten.
+- Die Truma-Hardware nutzt laut Hersteller **zwei AAA-Batterien**; für die Bedienung bei nahezu leerer Sensorbatterie zuerst diese ersetzen, bevor der Code verändert wird.
+
+**Warum die Geometriewerte so aussehen:** Der Hilfsrechner berechnet die wirksame Innenhöhe aus Wasserinhalt, Innenradius und einem angenommenen Endkappenradius. Die Rechnung ist eine **Modellnäherung** und ersetzt keine Hersteller-Flaschendaten oder reale Vergleichsmessung.

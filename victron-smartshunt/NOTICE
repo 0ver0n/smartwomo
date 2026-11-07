@@ -1,0 +1,6 @@
+Victron SmartShunt VE.Direct / MQTT gateway for Home Assistant
+Copyright 2026 Marcel Lörz (GitHub: 0ver0n)
+Original project, foundational implementation and practical testing: Marcel Lörz.
+Website: https://www.blindmitwomo.com
+Independent open-source community software; not endorsed by Victron Energy.
+Apache License, Version 2.0. This notice does not modify the license.

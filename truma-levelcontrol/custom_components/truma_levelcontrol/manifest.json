@@ -1,0 +1,17 @@
+{
+  "domain": "truma_levelcontrol",
+  "name": "Truma LevelControl BLE",
+  "version": "0.3.0",
+  "config_flow": true,
+  "integration_type": "device",
+  "documentation": "https://www.truma.com/de/produkte/gasversorgung/gasfuellstandsanzeiger/truma-levelcontrol/",
+  "iot_class": "local_polling",
+  "dependencies": ["bluetooth_adapters"],
+  "bluetooth": [
+    {
+      "service_uuid": "00000a00-0000-1000-8000-00805f9b34fb",
+      "connectable": true
+    }
+  ],
+  "codeowners": []
+}

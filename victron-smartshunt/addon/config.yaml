@@ -1,0 +1,79 @@
+name: "Victron SmartShunt"
+version: "4.2.3"
+slug: "victron-smartshunt"
+description: "USB SmartShunt -> MQTT Discovery mit VE.Direct Text + HEX Einstellungen"
+startup: services
+boot: auto
+apparmor: true
+arch:
+  - aarch64
+  - amd64
+
+uart: true
+udev: true
+
+
+
+options:
+  serial_device: "/dev/ttyUSB0"
+  baudrate: 19200
+  serial_timeout_s: 1
+  mqtt_host: "core-mosquitto"
+  mqtt_port: 1883
+  mqtt_username: ""
+  mqtt_password: ""
+  discovery_prefix: "homeassistant"
+  state_topic: "victron/shunt/state"
+  availability_topic: "victron/shunt/status"
+  raw_topic: "victron/shunt/raw"
+  summary_topic: "victron/shunt/summary"
+  settings_topic: "victron/shunt/settings"
+  command_base_topic: "victron/shunt/command"
+  publish_raw: false
+  publish_summary: true
+  summary_interval_s: 60
+  hex_enabled: false
+  hex_refresh_s: 3600
+  hex_command_timeout_s: 2.5
+  log_level: "INFO"
+  log_file: "/data/victron_smartshunt.log"
+  log_max_bytes: 2000000
+  log_backup_count: 5
+  no_data_wakeup_s: 5
+  reconnect_wait_s: 2
+  device_id: "victron_smartshunt_usb"
+  device_name: "Victron SmartShunt"
+  status_threshold_a: 0.1
+  log_power_sanity_check: true
+
+schema:
+  serial_device: str
+  baudrate: int
+  serial_timeout_s: int
+  mqtt_host: str
+  mqtt_port: int
+  mqtt_username: str?
+  mqtt_password: str?
+  discovery_prefix: str
+  state_topic: str
+  availability_topic: str
+  raw_topic: str
+  summary_topic: str
+  settings_topic: str
+  command_base_topic: str
+  publish_raw: bool
+  publish_summary: bool
+  summary_interval_s: int
+  hex_enabled: bool
+  hex_refresh_s: int
+  hex_command_timeout_s: float
+  log_level: str
+  log_file: str
+  log_max_bytes: int
+  log_backup_count: int
+  no_data_wakeup_s: int
+  reconnect_wait_s: int
+  device_id: str
+  device_name: str
+  status_threshold_a: float
+  log_power_sanity_check: bool

@@ -1,0 +1,30 @@
+{
+  "title": "Truma LevelControl",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Truma LevelControl hinzufügen",
+        "description": "Wähle einen gefundenen LevelControl.",
+        "data": {"address": "LevelControl"}
+      },
+      "bluetooth_confirm": {
+        "title": "Truma LevelControl gefunden",
+        "description": "{name} ({address}) hinzufügen?"
+      }
+    },
+    "abort": {
+      "already_configured": "Dieser LevelControl ist bereits eingerichtet.",
+      "no_devices_found": "Kein neuer Truma LevelControl wurde gefunden.",
+      "discovery_error": "Bluetooth-Erkennung konnte nicht übernommen werden."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "battery": {"name": "Batterie"},
+      "rssi": {"name": "Bluetooth-Signal"},
+      "raw_1": {"name": "Messwert 1 roh"},
+      "raw_2": {"name": "Messwert 2 roh"},
+      "measurement_raw": {"name": "Messdaten roh"}
+    }
+  }
+}

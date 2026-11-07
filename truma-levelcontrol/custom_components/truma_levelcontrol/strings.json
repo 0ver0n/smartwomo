@@ -1,0 +1,35 @@
+{
+  "title": "Truma LevelControl",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Truma LevelControl hinzufügen",
+        "description": "Bluetooth-Adresse eines weiteren Truma LevelControl eingeben.",
+        "data": {"address": "Bluetooth-Adresse"}
+      },
+      "bluetooth_confirm": {
+        "title": "Truma LevelControl gefunden",
+        "description": "{name} ({address}) hinzufügen?"
+      }
+    },
+    "abort": {
+      "already_configured": "Dieser LevelControl ist bereits eingerichtet.",
+      "no_devices_found": "Kein neuer Truma LevelControl wurde gefunden.",
+      "discovery_error": "Bluetooth-Erkennung konnte nicht übernommen werden."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "fill_percent": {"name": "Füllstand"},
+      "gas_kg": {"name": "Gasmenge"},
+      "temperature_c": {"name": "Temperatur"},
+      "battery": {"name": "LevelControl-Batterie"},
+      "measurement_status": {"name": "Messstatus"},
+      "liquid_volume_l": {"name": "Flüssiggasvolumen"},
+      "liquid_height_mm": {"name": "Flüssigkeitshöhe"},
+      "transit_time_us": {"name": "Ultraschall-Laufzeit"},
+      "rssi": {"name": "Bluetooth-Signal"},
+      "measurement_raw": {"name": "Rohdaten"}
+    }
+  }
+}
