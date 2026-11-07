@@ -1,0 +1,159 @@
+set_month_price:
+  name: Monatspreis setzen
+  description: Setzt einen Strompreis für einen bestimmten Monat. Jahr optional; ohne Jahr wird das aktuelle Jahr verwendet.
+  fields:
+    month:
+      name: Monat
+      description: Monat als Zahl von 1 bis 12.
+      required: true
+      example: 5
+      selector:
+        number:
+          min: 1
+          max: 12
+          step: 1
+          mode: box
+    price:
+      name: Preis
+      description: Strompreis in Euro pro kWh.
+      required: true
+      example: 0.293
+      selector:
+        number:
+          min: 0
+          max: 5
+          step: "any"
+          mode: box
+          unit_of_measurement: "€/kWh"
+    year:
+      name: Jahr
+      description: Optionales Jahr, z. B. 2026. Leer lassen = aktuelles Jahr.
+      required: false
+      example: 2026
+      selector:
+        number:
+          min: 2000
+          max: 2100
+          step: 1
+          mode: box
+
+clear_month_price:
+  name: Monatspreis löschen
+  description: Entfernt den gespeicherten Strompreis für einen bestimmten Monat; danach wird der Fallback-Preis genutzt.
+  fields:
+    month:
+      name: Monat
+      description: Monat als Zahl von 1 bis 12.
+      required: true
+      example: 5
+      selector:
+        number:
+          min: 1
+          max: 12
+          step: 1
+          mode: box
+    year:
+      name: Jahr
+      description: Optionales Jahr, z. B. 2026. Leer lassen = aktuelles Jahr.
+      required: false
+      example: 2026
+      selector:
+        number:
+          min: 2000
+          max: 2100
+          step: 1
+          mode: box
+
+set_month_grid_energy:
+  name: Historical grid energy for a month
+  description: Add a verified monthly grid-import value where the ordinary monthly archive has a gap.
+  fields:
+    month:
+      name: Month
+      required: true
+      selector:
+        number:
+          min: 1
+          max: 12
+          step: 1
+          mode: box
+    kwh:
+      name: Grid energy (kWh)
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 999999
+          step: "any"
+          mode: box
+    year:
+      name: Year (optional, defaults to current year)
+      required: false
+      selector:
+        number:
+          min: 2000
+          max: 2100
+          step: 1
+          mode: box
+
+clear_month_grid_energy:
+  name: Remove historical monthly grid energy
+  description: Remove a previously manually entered monthly grid-import value.
+  fields:
+    month:
+      name: Month
+      required: true
+      selector:
+        number:
+          min: 1
+          max: 12
+          step: 1
+          mode: box
+    year:
+      name: Year (optional, defaults to current year)
+      required: false
+      selector:
+        number:
+          min: 2000
+          max: 2100
+          step: 1
+          mode: box
+
+calibrate_period:
+  name: Calibrate an energy accumulator
+  description: Manually adjust an internal accumulator and its meter snapshot. Advanced use only. Back up first.
+  fields:
+    metric:
+      name: Metric
+      required: true
+      selector:
+        select:
+          options:
+            - solar
+            - bat_charge
+            - bat_discharge
+            - house
+            - grid
+            - solar_direct
+            - home_output
+            - grid_charge
+            - grid_to_battery
+            - solar_to_battery
+            - battery_to_house
+            - grid_to_home
+            - autarky
+    period:
+      name: Period
+      required: true
+      selector:
+        select:
+          options: [today, week, month, year, yesterday, last_week, last_month, last_year]
+    value:
+      name: Value (kWh or selected metric unit)
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 999999
+          step: "any"
+          mode: box

@@ -1,0 +1,12 @@
+{
+  "domain": "solar_mix_balance",
+  "name": "Solar Mix Balance",
+  "version": "5.8.2",
+  "documentation": "https://github.com/0ver0n/smartwomo",
+  "issue_tracker": "https://github.com/0ver0n/smartwomo/issues",
+  "codeowners": [],
+  "requirements": [],
+  "dependencies": [],
+  "iot_class": "local_polling",
+  "config_flow": true
+}

@@ -1,0 +1,232 @@
+{
+  "title": "Solar Mix Balance",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Quell-Entitäten zuordnen",
+        "description": "Solar Mix Balance wurde automatisch nach passenden Entitäten durchsucht.\n\nGefunden: {zendure_count} Zendure-, {ecoflow_count} EcoFlow-, {house_count} Hausverbrauchs-Kandidaten.\n\nJede Zeile zeigt: Friendly Name | Entity-ID | aktueller Wert.\n\nFelder ohne passende Entität auf '– Nicht konfigurieren –' lassen.",
+        "data": {
+          "zendure_solar_entity": "Zendure Solarleistung (W)",
+          "ecoflow_solar_entity": "EcoFlow Solarleistung (W)",
+          "battery_charge_entity": "Speicherladung aktuell (W)",
+          "battery_discharge_entity": "Speicherabgabe ans Haus (W)",
+          "house_power_entity": "Hausverbrauch aktuell (W)",
+          "house_energy_entity": "Hausverbrauch Gesamtzähler (kWh)",
+          "grid_power_entity": "Netzbezug aktuell (W)",
+          "grid_energy_entity": "Netzbezug Gesamtzähler (kWh)",
+          "phase1_power_entity": "Phase L1 (W)",
+          "phase2_power_entity": "Phase L2 (W)",
+          "phase3_power_entity": "Phase L3 (W)"
+        },
+        "data_description": {
+          "zendure_solar_entity": "Aktuelle Solarleistung des Zendure-Systems",
+          "ecoflow_solar_entity": "Aktuelle Solarleistung des EcoFlow-Systems",
+          "battery_charge_entity": "Aktuelle Ladeleistung des Speichers",
+          "battery_discharge_entity": "Aktuelle Entladeleistung des Speichers ans Haus",
+          "house_power_entity": "Gesamter Hausverbrauch in Watt",
+          "house_energy_entity": "Kumulierter Hausverbrauchs-Zählerstand (bevorzugt)",
+          "grid_power_entity": "Aktueller Netzbezug (wird berechnet wenn nicht vorhanden)",
+          "grid_energy_entity": "Kumulierter Netzbezugs-Zählerstand (bevorzugt)",
+          "phase1_power_entity": "Phase L1 – Fallback für Hausverbrauch",
+          "phase2_power_entity": "Phase L2 – Fallback für Hausverbrauch",
+          "phase3_power_entity": "Phase L3 – Fallback für Hausverbrauch"
+        }
+      },
+      "groups": {
+        "title": "Sensorgruppen auswählen",
+        "description": "Wähle welche Sensorgruppen erstellt werden sollen.",
+        "data": {
+          "sensor_groups": "Aktive Sensorgruppen"
+        }
+      },
+      "init_values": {
+        "title": "Optionale Startwerte",
+        "description": "Alle Felder optional. Leer = 0 = nicht gesetzt. Es genügt Solar + Netz.",
+        "data": {
+          "init_solar_week": "Solarenergie diese Woche (kWh)",
+          "init_solar_month": "Solarenergie diesen Monat (kWh)",
+          "init_solar_year": "Solarenergie dieses Jahr (kWh)",
+          "init_grid_week": "Netzbezug diese Woche (kWh)",
+          "init_grid_month": "Netzbezug diesen Monat (kWh)",
+          "init_grid_year": "Netzbezug dieses Jahr (kWh)",
+          "init_bat_charge_week": "Speicherladung diese Woche (kWh)",
+          "init_bat_charge_month": "Speicherladung diesen Monat (kWh)",
+          "init_bat_charge_year": "Speicherladung dieses Jahr (kWh)",
+          "init_bat_discharge_week": "Speicherabgabe diese Woche (kWh)",
+          "init_bat_discharge_month": "Speicherabgabe diesen Monat (kWh)",
+          "init_bat_discharge_year": "Speicherabgabe dieses Jahr (kWh)",
+          "init_house_week": "Hausverbrauch diese Woche (kWh)",
+          "init_house_month": "Hausverbrauch diesen Monat (kWh)",
+          "init_house_year": "Hausverbrauch dieses Jahr (kWh)",
+          "init_solar_direct_week": "Direkte Solarenergie diese Woche (kWh)",
+          "init_solar_direct_month": "Direkte Solarenergie diesen Monat (kWh)",
+          "init_solar_direct_year": "Direkte Solarenergie dieses Jahr (kWh)"
+        }
+      }
+    },
+    "error": {
+      "no_solar_source": "Mindestens eine Solar-Quelle (Zendure oder EcoFlow) muss konfiguriert sein.",
+      "entity_not_found": "Entität nicht gefunden. Bitte prüfe die Entity-ID."
+    },
+    "abort": {
+      "already_configured": "Solar Mix Balance ist bereits konfiguriert.",
+      "single_instance_allowed": "Nur eine Instanz von Solar Mix Balance ist erlaubt."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Solar Mix Balance Optionen",
+        "description": "Wähle, was du ändern möchtest. Für vivi-power reicht meistens „Strompreise schnell bearbeiten“ – dafür musst du nicht durch die gesamte Integration.",
+        "data": {
+          "action": "Bereich"
+        }
+      },
+      "groups": {
+        "title": "Sensorgruppen anpassen",
+        "description": "Änderungen bei Sensorgruppen führen zu einem Neustart der Integration.",
+        "data": {
+          "sensor_groups": "Aktive Sensorgruppen"
+        }
+      },
+      "init_values": {
+        "title": "Startwerte anpassen",
+        "description": "Alle Felder optional. Wert 0 = nicht gesetzt.",
+        "data": {
+          "init_solar_week": "Solarenergie diese Woche (kWh)",
+          "init_solar_month": "Solarenergie diesen Monat (kWh)",
+          "init_solar_year": "Solarenergie dieses Jahr (kWh)",
+          "init_grid_week": "Netzbezug diese Woche (kWh)",
+          "init_grid_month": "Netzbezug diesen Monat (kWh)",
+          "init_grid_year": "Netzbezug dieses Jahr (kWh)",
+          "init_bat_charge_week": "Speicherladung diese Woche (kWh)",
+          "init_bat_charge_month": "Speicherladung diesen Monat (kWh)",
+          "init_bat_charge_year": "Speicherladung dieses Jahr (kWh)",
+          "init_bat_discharge_week": "Speicherabgabe diese Woche (kWh)",
+          "init_bat_discharge_month": "Speicherabgabe diesen Monat (kWh)",
+          "init_bat_discharge_year": "Speicherabgabe dieses Jahr (kWh)",
+          "init_house_week": "Hausverbrauch diese Woche (kWh)",
+          "init_house_month": "Hausverbrauch diesen Monat (kWh)",
+          "init_house_year": "Hausverbrauch dieses Jahr (kWh)",
+          "init_solar_direct_week": "Direkte Solarenergie diese Woche (kWh)",
+          "init_solar_direct_month": "Direkte Solarenergie diesen Monat (kWh)",
+          "init_solar_direct_year": "Direkte Solarenergie dieses Jahr (kWh)"
+        }
+      },
+      "sources": {
+        "title": "Quell-Entitäten anpassen",
+        "description": "Passe die Quell-Entitäten an. Gefunden: {zendure_count} Zendure-, {ecoflow_count} EcoFlow-, {house_count} Hausverbrauchs-Kandidaten.",
+        "data": {
+          "zendure_solar_entity": "Zendure Solarleistung (W)",
+          "ecoflow_solar_entity": "EcoFlow Solarleistung (W)",
+          "battery_charge_entity": "Speicherladung aktuell (W)",
+          "battery_discharge_entity": "Speicherabgabe ans Haus (W)",
+          "house_power_entity": "Hausverbrauch aktuell (W)",
+          "house_energy_entity": "Hausverbrauch Gesamtzähler (kWh)",
+          "grid_power_entity": "Netzbezug aktuell (W)",
+          "grid_energy_entity": "Netzbezug Gesamtzähler (kWh)",
+          "phase1_power_entity": "Phase L1 (W)",
+          "phase2_power_entity": "Phase L2 (W)",
+          "phase3_power_entity": "Phase L3 (W)"
+        }
+      },
+      "prices": {
+        "title": "Strompreise schnell bearbeiten",
+        "description": "Trage nur die bekannten vivi-power-Monatspreise für das aktuelle Kalenderjahr ein. 0 bedeutet: diesen Monat nicht gesondert setzen, sondern den Fallback-Preis verwenden. So kannst du z. B. nur April, Mai und Juni eintragen. Preise für ein anderes Jahr kannst du über den Dienst solar_mix_balance.set_month_price setzen.",
+        "data": {
+          "grid_price_per_kwh": "Fallback-Strompreis (€/kWh)",
+          "price_month_01": "Preis Januar (€/kWh)",
+          "price_month_02": "Preis Februar (€/kWh)",
+          "price_month_03": "Preis März (€/kWh)",
+          "price_month_04": "Preis April (€/kWh)",
+          "price_month_05": "Preis Mai (€/kWh)",
+          "price_month_06": "Preis Juni (€/kWh)",
+          "price_month_07": "Preis Juli (€/kWh)",
+          "price_month_08": "Preis August (€/kWh)",
+          "price_month_09": "Preis September (€/kWh)",
+          "price_month_10": "Preis Oktober (€/kWh)",
+          "price_month_11": "Preis November (€/kWh)",
+          "price_month_12": "Preis Dezember (€/kWh)"
+        }
+      }
+    },
+    "error": {
+      "options_step_failed": "Der gewählte Optionsbereich konnte nicht geöffnet werden. Details stehen im Home-Assistant-Log.",
+      "price_save_failed": "Die Strompreise konnten nicht gespeichert werden. Bitte prüfe die Eingaben."
+    }
+  },
+  "services": {
+    "set_month_price": {
+      "name": "Set monthly electricity price",
+      "description": "Set a price per kWh for a given month.",
+      "fields": {
+        "month": {
+          "name": "Month"
+        },
+        "price": {
+          "name": "Price",
+          "description": "EUR per kWh"
+        },
+        "year": {
+          "name": "Year",
+          "description": "Optional; current year by default"
+        }
+      }
+    },
+    "clear_month_price": {
+      "name": "Clear monthly electricity price",
+      "description": "Remove a manually set monthly electricity price.",
+      "fields": {
+        "month": {
+          "name": "Month"
+        },
+        "year": {
+          "name": "Year"
+        }
+      }
+    },
+    "set_month_grid_energy": {
+      "name": "Set historical monthly grid energy",
+      "description": "Provide verified grid energy for gaps in the monthly archive.",
+      "fields": {
+        "month": {
+          "name": "Month"
+        },
+        "kwh": {
+          "name": "Imported grid energy",
+          "description": "Kilowatt hours"
+        },
+        "year": {
+          "name": "Year"
+        }
+      }
+    },
+    "clear_month_grid_energy": {
+      "name": "Clear historical monthly grid energy",
+      "description": "Remove previously entered monthly grid-import energy.",
+      "fields": {
+        "month": {
+          "name": "Month"
+        },
+        "year": {
+          "name": "Year"
+        }
+      }
+    },
+    "calibrate_period": {
+      "name": "Calibrate energy accumulator",
+      "description": "Adjust a stored accumulator and meter snapshot. Back up first.",
+      "fields": {
+        "metric": {
+          "name": "Metric"
+        },
+        "period": {
+          "name": "Period"
+        },
+        "value": {
+          "name": "Value"
+        }
+      }
+    }
+  }
+}
